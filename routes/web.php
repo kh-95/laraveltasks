@@ -13,41 +13,64 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
-Route::get('Message/{id}/{name}','usercontroller@message');
+// Route::get('Message/{id}/{name}','usercontroller@message');
+
+   
+// // Route::get('create','usercontroller@create');
+
+// // Route::post('store','usercontroller@store');
+
+// //blog
+
+
+// Route::get('create/blog','blogcontroller@create');
+
+// Route::post('store/blog','blogcontroller@store');
+
+// Route::get('blog','blogcontroller@index');
+
+// Route::get('delete/{id}','blogcontroller@delete');
+
+// // student
+
+// Route::get('create/student','studentcontroller@create');
+
+// Route::post('store/student','studentcontroller@store');
+
+// Route::get('student','studentcontroller@index');
+
+// Route::get('delete/{id}','studentcontroller@delete');
+
+// Route::get('edit/{id}','studentcontroller@edit');
+
+// Route::post('update','studentcontroller@update');
+
+
+// Route::get('login','studentcontroller@login');
+
+// Route::post('doLogin','studentcontroller@doLogin');
+// Route::get('logOut','studentcontroller@logOut');
+
+
+////// 
 
    
 Route::get('create','usercontroller@create');
 
 Route::post('store','usercontroller@store');
 
-//blog
 
 
-Route::get('create/blog','blogcontroller@create');
+Route::get('login','usercontroller@login');
 
-Route::post('store/blog','blogcontroller@store');
-
-Route::get('blog','blogcontroller@index');
-
-Route::get('delete/{id}','blogcontroller@delete');
-
-// student
-
-Route::get('create/student','studentcontroller@create');
-
-Route::post('store/student','studentcontroller@store');
-
-Route::get('student','studentcontroller@index');
-
-Route::get('delete/{id}','studentcontroller@delete');
-
-Route::get('edit/{id}','studentcontroller@edit');
-
-Route::post('update','studentcontroller@update');
+Route::post('doLogin','usercontroller@doLogin');
+Route::get('logOut','usercontroller@logOut');
 
 
+// Tasks
 
+Route::resource('Tasks','taskController');

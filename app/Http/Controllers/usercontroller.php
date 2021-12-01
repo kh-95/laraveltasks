@@ -6,14 +6,25 @@ use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Hash;
 
+use App\Models\User;
+
+use Illuminate\Support\Facades\Auth;
+
 class usercontroller extends Controller
 {
-  public function message ($id,$name){
-
-    echo "Test Message From Lravel Route File id = ".$id.' & Name = '.$name;
 
 
-  }
+  public function __construct(){
+       
+    $this->middleware('CheckLogin',['except' => ['login','doLogin','create','store']]);
+
+ }
+
+
+
+
+
+ 
   public function create (){
 
     return view('register');
@@ -21,35 +32,73 @@ class usercontroller extends Controller
 
   public function store(Request $request){
 
-     $request->validate([
+     $inputs=$request->validate([
         'name' => 'required|string',
         'email' => 'required|email',
         'password' => 'required|min:6',
-        'address' => 'required|max:10',
-        'gender' => 'required',
-        'linkedin' => 'required|url',
-        'image' => 'required|file',
+       
 ]);
 
 
-$inputs = $request->except(['password','image','_token']);
 
-if($request->hasFile('image'))
-{           
-  $name= $request->file('image')->getClientOriginalName();
- 
-  $inputs['image']= $request->file('image')->store('public/images');
 
   
 
   $inputs['password'] = Hash::make($request->password);
+
+
+ $op= User::create($inputs);
+ if($op){
+
+
+
+  return redirect(url('/login'));
+
+ }else{
+
+  echo "operation failed try again";
+ }
+    
+
 }
 
-    // dd($data);
+public function login(){
+  return view('login');
+}
 
-    return view ('profile',["dataprofile"=> $inputs]);
+
+
+public function doLogin(Request $request){
+
+   $data = $this->validate($request,[
+            "email"    => "required|email",
+            "password" => "required|min:6"
+        
+   ]);
+
+   // logic login .... 
+
+   if(Auth::attempt($data)){
+
+    
+
+         return redirect(url('/tasks'));
+   }else{
+     return redirect(url('/login'));
+   }
+
 
 }
+
+
+public function logOut(){
+
+  Auth::logout();
+   return redirect(url('/login'));
+}
+
+
+
 
 
 }

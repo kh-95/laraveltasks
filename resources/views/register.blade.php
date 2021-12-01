@@ -27,7 +27,7 @@
 
   
   
-  <form   action="{{ url('http://localhost/group8laravel/public/store') }}"  method="POST" enctype="multipart/form-data">
+  <form   action="{{ url('http://localhost/group8laravel/public/store') }}"  method="POST" >
 
     <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
 
@@ -47,35 +47,7 @@
     <input type="password"   class="form-control"  name="password"  id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter password">
   </div>
 
-  <div class="form-group">
-    <label for="exampleInputEmail">Address</label>
-    <input type="text"   class="form-control"  name="address" value="{{ old('address')}}" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter address">
-  </div>
 
- 
-
-  
-
-    <select class="form-control" name="gender">
-
-      <option></option>
-
-<option name="male" >Male</option>
-
-<option name="female" >Female</option>
-
-    </select>
-  
-
-  <div class="form-group">
-    <label for="exampleInputEmail">Linkedin</label>
-    <input type="text"   class="form-control"  name="linkedin" value="{{ old('linkedin')}}" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter linkedin">
-  </div>
-
-  <div class="form-group">
-    <label for="exampleInputEmail">Image</label>
-    <input type="file"   class="form-control"  name="image" value="{{ old('image')}}" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter ur image">
-  </div>
 
   
 

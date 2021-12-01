@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Models\student;
+use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Support\Facades\Hash;
 
@@ -77,16 +78,18 @@ public function edit($id){
 public function update(Request $request){
 
         
-    $data = $this->validate($request,
+     $this->validate($request,
     [    
         'name' => 'required|string',
         'email' => 'required|email',
         'password' => 'required|min:6',
         'image' => 'required|file',
       ]);
+
+      $inputs = $request->except(['password','image','_token']);
 if($request->hasFile('image')){
 
-    $name= $request->file('image')->getClientOriginalName();
+    $inputs['image']= $request->file('image')->getClientOriginalName();
  
     $path = $request->file('image')->store('public/imagesstudent');
   
@@ -95,7 +98,7 @@ if($request->hasFile('image')){
     $inputs['password'] = Hash::make($request->password);
 
 
-   $op =  student::where('id',$request->id)->update($data);
+   $op =  student::where('id',$request->id)->update($inputs);
 
 
 
@@ -103,7 +106,7 @@ if($request->hasFile('image')){
 
    if($op){
      
-    // unlink('storage/imagesstudent/'.$data->image);
+    //  unlink('storage/imagesstudent/'.basename($path));
 
     return redirect(url('/student'));
    }else{
@@ -148,6 +151,38 @@ unlink('storage/imagesstudent/'.$student->image);
 
 }
 
+public function login(){
+  return view('login');
+}
+
+
+
+public function doLogin(Request $request){
+
+   $data = $this->validate($request,[
+            "email"    => "required|email",
+            "password" => "required|min:6"
+        
+   ]);
+
+   // logic login .... 
+
+   if(Auth::attempt($data)){
+
+        return redirect(url('/student'));
+   }else{
+     return redirect(url('/login'));
+   }
+
+
+}
+
+
+public function logOut(){
+
+  Auth::logout();
+   return redirect(url('/login'));
+}
 
 
 

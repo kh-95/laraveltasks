@@ -40,8 +40,9 @@
 
         <div class="page-header">
             <h1>Read Students </h1> 
-            <br>
+          <br>
 
+          {{ 'Welcome ,'.auth()->user()->name }}   ||       <a href="{{ url('/logOut') }}">LogOut</a>
         </div>
 
        
